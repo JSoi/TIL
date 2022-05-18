@@ -8,7 +8,7 @@ Python에서 빈도수를 저장하는 collection 객체이다!
 ```python
 import collections
 example = collections.Counter("Don't blame me")
-print(list(example.elements())) # 최빈값 3개 반환
+print(list(example.elements()))
 ```
 
 
