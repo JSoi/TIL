@@ -12,6 +12,7 @@ print(list(example.elements())) # 최빈값 3개 반환
 ```
 
 
+
 ### 최빈값 꺼내오기
 
 ```python
@@ -32,7 +33,7 @@ ex1 = collections.Counter('hi')
 ex2 = collections.Counter('ho')
 
 print(ex1 + ex2) # 출력시 {'h':2, 'i':1,o':1}
-``` 
+```
 
 
 
@@ -42,14 +43,16 @@ ex1 = collections.Counter('hello')
 ex2 = collections.Counter('hell')
 
 print(ex1 - ex2) # 출력시 {'o':1}
-``` 
+```
+
 
 
 ### 교집합/합집합
+
 ```python
 ex1 = collections.Counter('ab')
 ex2 = collections.Counter('bc')
 
 print(ex1 | ex2) # 출력시 {'a':1, 'b':1, 'c':1}
 print(ex1 & ex2) # 출력시 {'b':1}
-``` 
+```
