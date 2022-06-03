@@ -55,7 +55,7 @@ Foward는 서버 내부에서 일어나기 때문에 클라이언트가 인지�
 2. Controller package를 생성해 내부에 (form, list, save와 같은) Controller를 생성한다
 3. HttpServlet을 상속받는 FrontControllerServlet을 구현한다 (protected service overriding 필요)
 
-HandlerAdapter 추가
+#### HandlerAdapter 추가
 
 1. MyHandlerAdapter Interface 생성
 
