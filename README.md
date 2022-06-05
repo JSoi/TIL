@@ -16,6 +16,9 @@
 
 #### 자바 ORM 표준 JPA 프로그래밍 - 기본
 
+*  :computer: [Practice Code](https://github.com/JSoi/SpringBasic/tree/main/ex1-hello-jpa)
+* :pencil2: [Notes](https://github.com/JSoi/TIL/tree/main/spring/JPA)
+
 
 
 ## Record :books:
@@ -30,4 +33,9 @@
 
 ### [2022-06]
 
-#### [06/01](https://github.com/JSoi/TIL/blob/main/day-by-day/20220601.md) | [06/02](https://github.com/JSoi/TIL/blob/main/day-by-day/20220602.md) | [06/03](https://github.com/JSoi/TIL/blob/main/day-by-day/20220603.md) 
+#### [06/01](https://github.com/JSoi/TIL/blob/main/day-by-day/20220601.md) | [06/02](https://github.com/JSoi/TIL/blob/main/day-by-day/20220602.md) | [06/03](https://github.com/JSoi/TIL/blob/main/day-by-day/20220603.md) | [06/04](https://github.com/JSoi/TIL/blob/main/day-by-day/20220604.md) | 
+
+
+
+#### 
+
