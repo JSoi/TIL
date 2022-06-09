@@ -12,7 +12,7 @@ Service 객체는 비즈니스 로직이 모여있다.
 
 Service : update(ID, 바꾸고자 하는 비밀번호)
 
-Repository
+Repository : ID를 조회
 
 
 

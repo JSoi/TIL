@@ -14,3 +14,20 @@ null 값의 처리가 PathVariable보다는 유연하다.
 @GetMapping("/api")
     public String hello(@RequestParam int param1, @RequestParam int param2) {
 ```
+
+
+
+required = true
+
+defaultValue = "value"
+
+
+
+요청 파라미터를 Map으로 조회하는 것도 가능하다
+
+@RequestParam
+
+
+
+MutlfiValueMap으로도 조회할 수 있다.
+
