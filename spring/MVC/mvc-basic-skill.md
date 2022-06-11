@@ -63,3 +63,102 @@ public String requestParamV3(
 👉 이를 방지하기 위해 Integer로 변경 혹은 defaultValue를 사용한다.
 
 ```@RequestParam(required = false, defaultValue = "-1") int age```를 통해 빈 문자를 입력받아도 -1이 입력되게 한다. (사실 defaultValue를사용하게 되면 required가 큰 의미가 없어짐)
+
+
+
+```java
+@ResponseBody
+@RequestMapping("/request-param-map")
+public String requestParamMap(@RequestParam Map<String, Object> paramMap) {
+    log.info("username-{}, age={}", paramMap.get("username"), paramMap.get("age"));
+    return "ok";
+}
+```
+
+파라미터의 값이 2개 이상인 것 같다면 **MultiValueMap**을 사용해야 한다.
+
+MultiValueMap은 ```key=[value1,value2]``` 형식으로 되어 있으며
+
+> ?userIds=id1&userIds=id2
+
+형식으로 들어오면 MultiValueMap을 사용하면 된다.(많이 안쓴다고..한다)
+
+
+
+
+
+@ModelAttribute
+
+객체를 생성해서 요청 파라미터의 이름으로 
+
+
+
+----
+
+정리
+
+HTTP  요청 메시지를 통해 클라이언트에서 서버로 데이터를 전달하는 방법을 알아보자
+
+1. GET
+
+   - ```/url?username=hello&age=20```
+
+   - 메시지 바디 없이, url 쿼리 파라미터에 데이터를 포함해 전달
+
+   - 검색, 필터, 페이징에서 많이 사용
+
+2. POST - HTML Form
+
+   - content-type : application/x-www-form-urlencoded
+   - 메시지 바디에 쿼리 파라미터 형식으로 전달
+   - 회원가입, 상품 주문, HTML Form
+
+3. HTTP Message Body
+
+   - HTTP API에서 많이 사용, JSON / XML / TEXT
+   - 데이터 형식은 주로 JSON
+   - POST, PUT, PATCH
+
+
+
+### HTTP 요청 메시지 - TEXT
+
+```java
+public HttpEntity<String> requestBodyString(HttpEntity<String> httpEntity) throws IOException{
+    String body = httpEntity.getBody();
+    log.info("messageBody : {}", body);
+    return new HttpEntity<>("ok");
+}
+```
+
+#### HttpEntity
+
+Http Header, Body 정보를 조회
+
+요청 파라미터를 조회하지않음
+
+응답에도 사용 가능(바디 & 헤더)
+
+HttpMessageConverter가 바꿔주는 것!
+
+
+
+HttpEntity를 상속받은 것 - ResponseEntity, RequestEntity
+
+
+
+#### @ResponseBody
+
+헤더 정보를 조회하기 위해서는 HttpEntity, RequestHeader를 사용하자
+
+응답결과를 body에 담아준다
+
+
+
+
+
+#### 정적 리소스
+
+/static , /public, /resources, /META-INF/resources 등
+
+스프링 부트가 파일을 변경 없이 서비스하는 것이다.
