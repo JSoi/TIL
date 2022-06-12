@@ -16,8 +16,6 @@
 
 
 
-
-
 ### 구현 순서
 
 1. 나만의 Exception을 만들자! (사실 직접 구현한 Exception 아니어도 상관은 없다 ^^)..!
@@ -37,17 +35,16 @@
 2. ResponseEntityExceptionHandler를 상속받는 클래스 구현 (이게 RestControllerAdvice)
 
    ```java
-   @RestControllerAdvice(basePackages = "com.jsoi.myblog.controller") 
-   	// AOP 타겟이 되는 패키지를 설정
+   @RestControllerAdvice(basePackages = "com.jsoi.myblog.controller") // AOP 타겟이 되는 패키지를 설정
    public class RequestException extends ResponseEntityExceptionHandler {
-       @ExceptionHandler(EmptyException.class)
-       protected ExceptionMessage handleDataException(EmptyException emptyException) {
-           return new ExceptionMessage(emptyException.getCode().toString());
+       @ExceptionHandler(MyException.class) //    @ExceptionHandler(value={A.class, B.class}) 도 사용가능
+       protected ExceptionMessage handleDataException(MyException myException) {
+           return new ExceptionMessage(myException.getCode().getDesc());
        }
    }
    ```
-
    
+
 
 
 
