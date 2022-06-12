@@ -16,6 +16,15 @@ RequestMapping의 value 내에서 {} 사이에 변수명을 넣는다.
 
 
 
+정규식도 사용가능
+
+```java
+@GetMapping("/{postId:[0-9]*}/comments")
+//{id:[A-Z]*} 식으로도 사용가능
+```
+
+
+
 ## 참조
 
 Optional PathVariable
