@@ -162,3 +162,136 @@ HttpEntity를 상속받은 것 - ResponseEntity, RequestEntity
 /static , /public, /resources, /META-INF/resources 등
 
 스프링 부트가 파일을 변경 없이 서비스하는 것이다.
+
+
+
+
+
+#### ResponseBody 메서드에 StatusCode를 지정하고 싶을 때
+
+@ResponseStatus
+
+@ResponseEntity<>(data,status); - 동적으로 상태를 설정하고 싶을때
+
+
+
+
+
+#### @RestController
+
+@ResponseBody + @Controller 합친 것!
+
+메시지 바디에 직접 데이터를 입력한다.
+
+
+
+### HTTP Message Converter
+
+
+
+HTTP Request, Response 둘 다에 사용된다
+
+HTTP Body에 문자 내용을 직접 반환한다.
+
+viewResolver 대신에 사용된다.
+
+
+
+> @ResponseBody를 사용시 문자 내용을 직접 반환한다 ( ViewResolver 대신에 HttpMessageConverter가 동작함)
+> - 문자 처리 : StringHttpMessageConverter
+> - 객체 처리 : MappingJackson2HttpMessageConverter
+> - 기타 Byte 처리.. 허허
+
+
+
+**스프링 MVC 는 다음의 경우에 HTTP Message Converter를 사용한다.**
+
+1. HTTP 요청  `@RequestBody`, `HttpEntity`, `RequestEntity`
+2. HTTP 응답 `@ResponseBody`, `HttpEntity`, `ResponseEntity` 
+
+
+
+#### Message Handler Converter의 함수
+
+1. canRead(), canWrite()
+2. read(), write()
+
+
+
+canRead() 만족시 read()를 호출해서 객체를 생성하고, 반환한다.
+
+canWrite()만족시 write()를 호출해서 HTTP 응답 메시지 바디에 데이터를 생성한다.
+
+
+
+스프링 부트 기본 메시지 컨버터 ( 위에서 시작해 조건이 맞지 않으면 내려간다. )
+
+1. ByteArrayHttpMessageConverter
+   - Byte[] 데이터 처리
+   - 클래스 타입 : `byte[]` , 미디어 타입(content-type) : `*/*`
+   - 요청 : `@RequestBody byte[] a`
+   - 응답 : `@ResponseBody return byte[]`, 쓰기 미디어 타입(content-type) : `application/json`
+
+2. StringHttpMessageConverter
+   - 클래스 타입 : `String` , 미디어 타입(content-type) : `*/*`
+   - 요청 : `@RequestBody String data`
+   - 응답 : `@ResponseBody return byte[]`, 쓰기 미디어 타입(content-type) : `text/plain`
+
+3. MappingJackson2HttpMessageConverter
+   - 클래스 타입 : `HashMap` , 미디어 타입(content-type) : `application/json`
+   - 요청 : `@RequestBody HelloData data`
+   - 응답 : `@ResponseBody return helloData`, 쓰기 미디어 타입(content-type) : `application/json`
+
+
+
+**HTTP 요청 데이터 읽기**
+
+@RequestBody, HttpEntity를 사용한다.
+
+`canRead()`를 만족시 (클래스타입, Content-Type) `read()` 호출해 객체 생성&반환
+
+
+
+**HTTP 요청 데이터 읽기**
+
+@ResponseBody, HttpEntity를 사용한다.
+
+`canWrite()`를 만족시 (클래스타입, @RequesteMapping의 produces) `write()` 호출해 응답 메시지 바디에 데이터를 생성함
+
+
+
+#### ArgumentResolver
+
+RequestMappingHandlerAdaptor가 ArgumentResolver를 통해 전달 데이터를 받아온다.
+
+생성된 데이터를 핸들러(Controller)에게 보내준다.
+
+커스텀하기 위해 확장하여 만들 수도 있다!
+
+이 때, 만약 Request가 HttpEntity여서 Body를 핸들링해야 한다면?  ArgumentResolver의 종류인  **HTTP 메시지 컨버터 사용!**
+
+
+
+
+#### ReturnValueHandler
+
+HandlerMethodReturnValueHandler를 줄인 것이며, argumentResolver가 주는 값을 받아서 HTTP Message Converter를 호출해 응답 결과를 만든다.
+
+이 때, 만약 Request가 HttpEntity여서 Body를 핸들링해야 한다면?  ArgumentResolver의 종류인  **HTTP 메시지 컨버터 사용!**
+
+![Spring](https://user-images.githubusercontent.com/17975647/173235651-4400ba81-b5d8-4d10-9643-df78a03f4c6f.jpg)
+
+#### **<정리>**
+
+@RequestBody,  HttpEntity를 처리하기 위해 
+
+1) ArgumentResolver(HttpEntity의 경우 )
+2) ReturnValueHandler
+
+들이 호출한다.
+
+
+
+기능 확장을 원한다면
+
+WebMvcConfigurer를 상속 받아서 @Bean으로 등록해서 override하자!
